@@ -27,7 +27,7 @@ class Planets (Base):
     url = Column(String(250), nullable=False)
 
 class People (Base):
-    __tablename__ = 'address'
+    __tablename__ = 'people'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
@@ -35,11 +35,9 @@ class People (Base):
     height = Column(Integer, nullable=False)
     mass= Column(Integer, nullable=False)
     hair_color = Column(String, nullable=False)
-    planet_id = Column(Integer, ForeignKey('planets.id'))
-    people = relationship(Planets)
 
 class User (Base):
-    __tablename__ = 'User'
+    __tablename__ = 'user'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
@@ -49,15 +47,16 @@ class User (Base):
     password = Column(String(250),nullable=False)
 
 class Favorites (Base):
-    __tablename__ = 'Favorites'
+    __tablename__ = 'favorites'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
-    user_id = Column(Integer, ForeignKey('User.id'))
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
     planet_id = Column(Integer, ForeignKey('planets.id'))
     people_id = Column(Integer, ForeignKey('people.id'))
-    favorites = relationship(Planets)
-    favorites = relationship(People)
-    favorites = relationship(User)
+    planets = relationship(Planets)
+    people = relationship(People)
+    user = relationship(User)
 
     def to_dict(self):
         return {}
